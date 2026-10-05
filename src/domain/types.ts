@@ -1,7 +1,10 @@
 export type Phasor = { magnitude: number; angleDeg: number };
 export type Sample = { timeMs: number; channel: string; value: number; unit: string; quality: 'good' | 'suspect' | 'bad' };
 export type Breaker = { id: string; name: string; substation: string; state: 'open' | 'closed' | 'tripped'; tripTimeMs?: number };
-export type ProtectionDevice = { id: string; name: string; type: 'distance' | 'overcurrent' | 'differential' | 'breaker-failure'; lineId: string; zones: any[]; settingsVersion: string; enabled: boolean };
+export type SettingsZone = { zone: number; reachOhm: number; delayMs: number };
+export type ProtectionDevice = { id: string; name: string; type: 'distance' | 'overcurrent' | 'differential' | 'breaker-failure'; lineId: string; zones: SettingsZone[]; settingsVersion: string; enabled: boolean };
+export type SettingSnapshot = { id: string; lineId: string; effectiveAt: string; author: string; reason: string; checksum: string; zones: SettingsZone[] };
+export type MaintenanceTest = { id: string; deviceId: string; testType: string; measurements: Record<string, number>; pass: boolean; testedAt: string; nextDueAt: string };
 export type FaultEvent = { id: string; lineId: string; occurredAt: string; fault: any; location: any; source: string; status: string };
 export type Recording = { id: string; name: string; lineId: string; triggerTimeMs: number; sampleRateHz: number; samples: Sample[]; quality: any; createdAt: string; status: string };
 export type AuditEntry = { id: string; time: string; action: string; entity: string; payload: any };
